@@ -104,7 +104,7 @@ while read line; do
 
     username=${addr[0]}
 
-    createAccount=$(./cleos.sh system newaccount --transfer --stake-net "$STAKE_NET_ASSET" --stake-cpu "$STAKE_CPU_ASSET" --buy-ram "$RAM_ASSET" eosio $username ${addr[1]} ${addr[1]} -f 2>&1)
+    createAccount=$(./cleos.sh system newaccount --max-transaction-time=10000 --transfer --stake-net "$STAKE_NET_ASSET" --stake-cpu "$STAKE_CPU_ASSET" --buy-ram "$RAM_ASSET" eosio $username ${addr[1]} ${addr[1]} -f 2>&1)
 
     if [[ $createAccount =~ .*Error.* ]]; then
         echo "${addr[0]},${addr[1]},${addr[2]}" >> error_accounts.log
@@ -126,12 +126,12 @@ while read line; do
         	echo -ne "----------  TX Failed. Retry     -------------                       \r"
         	sleep $RETRY_TX_PAUSE
 
-        	issueTransfer=$(./cleos.sh transfer eosio $username "$TRANSFER_ASSET" "test ERC20 Distribution" -f 2>&1)
+        	issueTransfer=$(./cleos.sh transfer --max-transaction-time=10000 eosio $username "$TRANSFER_ASSET" "test ERC20 Distribution" -f 2>&1)
                 if [[ $issueTransfer =~ .*Error.* ]]; then
                     echo -ne "----------   TX Failed. Logged  -------------                 \r"
 		    REQUEST_FAILED=$(($REQUEST_FAILED+1))
                     echo "${addr[0]},${addr[1]},${addr[2]}" >> error_transfer.log
-                    echo "./cleos.sh transfer eosio $username \"$TRANSFER_ASSET\" \"test ERC20 Distribution\" -f 2>&1" >> error_transfer__.log
+                    echo "./cleos.sh transfer --max-transaction-time=10000 eosio $username \"$TRANSFER_ASSET\" \"test ERC20 Distribution\" -f 2>&1" >> error_transfer__.log
 		    echo $issueTransfer >> error_transfer_.log
                 fi
 	    else 
