@@ -5,5 +5,5 @@
 - all create account fails will be logged
 - all failed transaction after second try - logged
 
-by CryptoLions.io
+by CryptoLions.io  
 https://github.com/CryptoLions/EOS-ERC20-Distribution
