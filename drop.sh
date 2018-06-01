@@ -104,7 +104,7 @@ while read line; do
 
     username=${addr[0]}
 
-    createAccount=$(./cleos.sh system newaccount --max-transaction-time=10000 --transfer --stake-net "$STAKE_NET_ASSET" --stake-cpu "$STAKE_CPU_ASSET" --buy-ram "$RAM_ASSET" eosio $username ${addr[1]} ${addr[1]} -f 2>&1)
+    createAccount=$(./cleos.sh system newaccount -x 10000 --transfer --stake-net "$STAKE_NET_ASSET" --stake-cpu "$STAKE_CPU_ASSET" --buy-ram "$RAM_ASSET" eosio $username ${addr[1]} ${addr[1]} -f 2>&1)
 
     if [[ $createAccount =~ .*Error.* ]]; then
         echo "${addr[0]},${addr[1]},${addr[2]}" >> error_accounts.log
